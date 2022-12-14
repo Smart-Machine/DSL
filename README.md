@@ -3,7 +3,7 @@ Use case sceneario:
 You have to check that the following schema is following the given bellow format, no matter the format of the file.
 
 _schema.json_
-```js
+```json
 {
     "login" : "alex",
     "email" : "alex.andr@gmail.com",
@@ -49,4 +49,34 @@ Runs like this:
 
 ```bash
 endorser 
+```
+
+## multiple fields use case
+
+To make an "or" check on a field, for 2 possible validations, simply declare it twice!
+
+_schema.yml_
+```yml
+customers:
+- name: "John Doe"
+  phoneNumber: "1234321"
+- name: "John Lennon"
+  phoneNumber: 2223334
+```
+
+_schema.edrs_
+```
+OBJECT
+  FIELD "customers"
+    IS ARRAY
+    IS LENGTH > 0
+    EVERY OBJECT
+      FIELD "name"
+        IS STRING
+      FIELD "phoneNumber"
+        IS STRING
+        IS LENGTH > 5
+      FIELD "phoneNumber"
+        IS NUMBER
+        IS BETWEEN 100_000 AND 999_999_999
 ```
